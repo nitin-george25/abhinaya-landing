@@ -58,20 +58,39 @@ git push -u origin main
 
 ## 3. Remove the old landing from the console repo
 
-In `abhinaya-cinemas` (per Repo Split Checklist Phase 4), on a branch off `main`:
+⚠️ **Timing:** the `abhinaya-cinemas` repo still builds the old landing to the
+Pages project on `abhinayacinemas.com`. Do this removal on a branch now, but
+**merge to `main` only after the apex domain is pointed at the new Worker**
+(§4) — merging earlier leaves the live Pages build with nothing to serve.
+After the merge, the old landing Pages project build will fail; that's
+expected — retire/delete that project once the Worker is confirmed live.
+
+`build-admin.sh` builds only `app/` → `app/dist` and does **not** use the root
+`_headers`/`_redirects`/`build.sh`, so all landing files below are safe to drop
+from the console repo.
+
+On your Mac (native git — the sandbox can't unlink on the synced folder), from a
+clean tree on a branch off `main`:
 
 ```bash
+cd abhinaya-cinemas
+git stash -u          # park the uncommitted feat/landing-seo edits if present
 git checkout -b chore/remove-landing main
-git rm index.html privacy.html terms.html robots.txt sitemap.xml
-git rm -r site
-# keep app/, admin/, supabase/, migrations/, scripts/, SQL + design docs
-git commit -m "chore: move landing to abhinaya-landing repo"
+git rm index.html privacy.html terms.html _headers _redirects build.sh
+git rm -r site netlify
+git rm netlify.toml
+# keeps: app/, admin/, supabase/, migrations/, scripts/, root SQL, design docs, ROLE_ACCESS.md, build-admin.sh
+git commit -m "chore: remove landing site (moved to abhinaya-landing repo)"
+git push -u origin chore/remove-landing
 ```
 
-Leave the SEO commit from earlier (`feat/landing-seo`) unmerged/dropped if you
-go straight to the Next.js site — its changes are superseded here. (If you want
-the interim win on the *current* site while the Next.js cutover is prepared,
-merge `feat/landing-seo` first, then remove later.)
+> `robots.txt` / `sitemap.xml` / `site/assets/og-cover.jpg` were created on the
+> uncommitted `feat/landing-seo` working tree and never landed on `main`, so
+> they're not in the list. The whole `feat/landing-seo` SEO pass is superseded
+> by the Next.js site — drop it (don't merge it) unless you want the interim
+> on-page win on the current Pages site while cutover is prepared.
+
+Then update the console `README.md` to console-only and note the landing repo URL.
 
 ---
 
@@ -89,8 +108,15 @@ npm run deploy         # builds with OpenNext, then wrangler deploy
 **B. Git-connected Workers Builds (CI on push)** — in the Cloudflare dashboard:
 Workers & Pages → Create → Workers → connect the `abhinaya-landing` repo.
 - Build command: `npx opennextjs-cloudflare build`
-- Deploy command: `npx wrangler deploy`
+- Deploy command: `npx opennextjs-cloudflare deploy`
 - Production branch: `main`
+
+> ⚠️ Do **not** set the deploy command to `npx wrangler deploy` for an OpenNext
+> project. `wrangler deploy` only *delegates* to `opennextjs-cloudflare deploy`,
+> which fails with **"Could not find compiled Open Next config, did you run the
+> build command?"** unless `opennextjs-cloudflare build` produced `.open-next/`
+> first. Use the explicit `opennextjs-cloudflare` build + deploy pair above, or
+> put `npm run deploy` (which chains both) in a single command field.
 
 The Worker name is `abhinaya-landing` (see `wrangler.jsonc`). `nodejs_compat`
 and the assets binding are already configured.

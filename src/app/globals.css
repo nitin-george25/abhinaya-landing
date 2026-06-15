@@ -101,7 +101,7 @@
 
 /* ---- Global resets (from legacy index.html <style>) ---- */
 * { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; overflow-x: hidden; }
 html, body { margin: 0; }
 body {
   background: var(--cod-gray);
@@ -109,6 +109,7 @@ body {
   font-family: var(--font-text);
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
+  max-width: 100%;
 }
 a { text-decoration: none; }
 ::selection { background: var(--accent); color: var(--spring-wood); }

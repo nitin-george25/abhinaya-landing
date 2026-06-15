@@ -45,30 +45,39 @@ export default function Header({ active, onNav }: { active: string; onNav: (item
         </div>
       </div>
 
-      {/* Mobile / full drawer */}
+      {/* Mobile / full drawer.
+          Outer layer is viewport-sized (inset:0, no transform) and clips its
+          overflow, so the off-canvas panel translated to translateX(100%) can't
+          add horizontal scroll width or be swiped into view. pointerEvents is
+          off while closed so the invisible layer never blocks the page. */}
       <div style={{
-        position: "fixed", inset: 0, zIndex: 100, background: "var(--cod-gray)",
-        transform: open ? "translateX(0)" : "translateX(100%)", transition: "transform .4s var(--ease)",
-        display: "flex", flexDirection: "column", padding: "24px 32px",
+        position: "fixed", inset: 0, zIndex: 100, overflow: "hidden",
+        pointerEvents: open ? "auto" : "none",
       }}>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-          <LogoLockup size={30} />
-          <button onClick={() => setOpen(false)} aria-label="Close" style={{ background: "none", border: 0, color: "var(--fg)", cursor: "pointer", display: "inline-flex" }}><Icon name="x" size={28} /></button>
-        </div>
-        <nav style={{ display: "flex", flexDirection: "column", gap: 6, marginTop: 48 }}>
-          {NAV.map((item, i) => (
-            <a key={item} onClick={() => { onNav(item); setOpen(false); }} style={{
-              fontFamily: "var(--font-display)", fontWeight: 700, textTransform: "uppercase", fontSize: "clamp(36px,9vw,68px)",
-              lineHeight: 1.02, cursor: "pointer", color: active === item ? "var(--accent)" : "var(--fg)",
-              display: "flex", alignItems: "baseline", gap: 14,
-            }}>
-              <span style={{ fontFamily: "var(--font-text)", fontWeight: 600, fontSize: 14, color: "var(--fg-faint)", letterSpacing: "0.1em" }}>0{i + 1}</span>
-              {item}
-            </a>
-          ))}
-        </nav>
-        <div style={{ marginTop: "auto" }}>
-          <SocialLinks size={22} gap={20} />
+        <div style={{
+          position: "absolute", inset: 0, background: "var(--cod-gray)",
+          transform: open ? "translateX(0)" : "translateX(100%)", transition: "transform .4s var(--ease)",
+          display: "flex", flexDirection: "column", padding: "24px 32px",
+        }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            <LogoLockup size={30} />
+            <button onClick={() => setOpen(false)} aria-label="Close" style={{ background: "none", border: 0, color: "var(--fg)", cursor: "pointer", display: "inline-flex" }}><Icon name="x" size={28} /></button>
+          </div>
+          <nav style={{ display: "flex", flexDirection: "column", gap: 6, marginTop: 48 }}>
+            {NAV.map((item, i) => (
+              <a key={item} onClick={() => { onNav(item); setOpen(false); }} style={{
+                fontFamily: "var(--font-display)", fontWeight: 700, textTransform: "uppercase", fontSize: "clamp(36px,9vw,68px)",
+                lineHeight: 1.02, cursor: "pointer", color: active === item ? "var(--accent)" : "var(--fg)",
+                display: "flex", alignItems: "baseline", gap: 14,
+              }}>
+                <span style={{ fontFamily: "var(--font-text)", fontWeight: 600, fontSize: 14, color: "var(--fg-faint)", letterSpacing: "0.1em" }}>0{i + 1}</span>
+                {item}
+              </a>
+            ))}
+          </nav>
+          <div style={{ marginTop: "auto" }}>
+            <SocialLinks size={22} gap={20} />
+          </div>
         </div>
       </div>
     </header>
