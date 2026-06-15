@@ -1,0 +1,18 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "abhinaya-landing",
+  "main": ".open-next/worker.js",
+  "compatibility_date": "2025-03-25",
+  // nodejs_compat is required by OpenNext; global_fetch_strictly_public lets
+  // server-side fetch() reach the public Supabase REST endpoint.
+  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS"
+  },
+  "observability": {
+    "enabled": true
+  }
+  // Custom domains (abhinayacinemas.com, www) are attached in the Cloudflare
+  // dashboard or via `routes` once the Worker is created — see DEPLOY.md §4.
+}

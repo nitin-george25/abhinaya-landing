@@ -1,0 +1,177 @@
+/* ============================================================
+   ABHINAYA CINEMAS — Color & Type Foundations
+   Born in Kottayam, Kerala · stories since 1968, redefined.
+   Ported from the legacy site's colors_and_type.css. Font src
+   paths are absolute (/site/fonts/...) so they resolve from the
+   Next/Worker static assets regardless of the CSS output path.
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700&family=Barlow:wght@400;500;600&family=Fredoka:wght@400;500;600;700&display=swap');
+
+/* Pontiac (DEMO build — licensed version arriving). The demo watermarks
+   NUMERALS, so each face excludes digits 0–9 (U+0030–0039) and "+" (U+002B);
+   those fall through to Fredoka. Drop the unicode-range lines when licensed
+   files land. */
+@font-face {
+  font-family: 'Pontiac'; font-weight: 300; font-style: normal; font-display: swap;
+  src: url('/site/fonts/pontiac-light.otf') format('opentype');
+  unicode-range: U+0-2A, U+2C-2F, U+3A-10FFFF;
+}
+@font-face {
+  font-family: 'Pontiac'; font-weight: 400; font-style: normal; font-display: swap;
+  src: url('/site/fonts/pontiac-regular.otf') format('opentype');
+  unicode-range: U+0-2A, U+2C-2F, U+3A-10FFFF;
+}
+@font-face {
+  font-family: 'Pontiac'; font-weight: 700; font-style: normal; font-display: swap;
+  src: url('/site/fonts/pontiac-bold.otf') format('opentype');
+  unicode-range: U+0-2A, U+2C-2F, U+3A-10FFFF;
+}
+@font-face {
+  font-family: 'Pontiac'; font-weight: 900; font-style: normal; font-display: swap;
+  src: url('/site/fonts/pontiac-black.otf') format('opentype');
+  unicode-range: U+0-2A, U+2C-2F, U+3A-10FFFF;
+}
+
+:root {
+  --cod-gray:        #151515;
+  --spring-wood:     #F6F5EC;
+  --white:           #F7F7F7;
+  --red-orange:      #FF3720;
+  --flush-orange:    #FF7F00;
+  --selective-yellow:#FFB600;
+  --lochmara:        #008BDC;
+  --chartreuse:      #A7C01B;
+
+  --ink-950: #0E0E0D;
+  --ink-900: #151515;
+  --ink-850: #1C1C1A;
+  --ink-800: #242422;
+  --ink-700: #34332F;
+  --ink-500: #6E6C64;
+  --ink-300: #B8B5A8;
+  --ink-100: #ECEAE0;
+
+  --bg:            var(--cod-gray);
+  --bg-surface:    var(--ink-850);
+  --bg-elevated:   var(--ink-800);
+  --fg:            var(--spring-wood);
+  --fg-muted:      rgba(246, 245, 236, 0.60);
+  --fg-faint:      rgba(246, 245, 236, 0.38);
+  --border:        rgba(246, 245, 236, 0.12);
+  --border-strong: rgba(246, 245, 236, 0.24);
+
+  --accent:        var(--red-orange);
+  --accent-press:  #E22D17;
+  --on-accent:     var(--spring-wood);
+
+  --screen-gradient: linear-gradient(90deg, var(--red-orange) 0%, var(--flush-orange) 100%);
+  --beam-gradient: linear-gradient(90deg, var(--red-orange), var(--selective-yellow), var(--lochmara));
+
+  --font-display: 'Pontiac', 'Fredoka', 'Barlow Condensed', system-ui, sans-serif;
+  --font-text:    'Barlow Condensed', 'Barlow', system-ui, sans-serif;
+  --font-body:    'Barlow', system-ui, sans-serif;
+
+  --step--1: 0.833rem;
+  --step-0:  1rem;
+  --step-1:  1.25rem;
+  --step-2:  1.6rem;
+  --step-3:  2.25rem;
+  --step-4:  3.25rem;
+  --step-5:  4.75rem;
+  --step-6:  7rem;
+
+  --r-xs: 4px;
+  --r-sm: 8px;
+  --r-md: 14px;
+  --r-lg: 22px;
+  --r-xl: 32px;
+  --r-pill: 999px;
+
+  --sp-1: 4px;  --sp-2: 8px;  --sp-3: 12px; --sp-4: 16px;
+  --sp-5: 24px; --sp-6: 32px; --sp-7: 48px; --sp-8: 64px; --sp-9: 96px;
+
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.4);
+  --shadow-md: 0 8px 24px rgba(0,0,0,0.45);
+  --shadow-lg: 0 24px 60px rgba(0,0,0,0.55);
+  --glow-accent: 0 0 0 1px rgba(255,55,32,0.35), 0 12px 40px rgba(255,55,32,0.28);
+
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ---- Global resets (from legacy index.html <style>) ---- */
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+html, body { margin: 0; }
+body {
+  background: var(--cod-gray);
+  color: var(--fg);
+  font-family: var(--font-text);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+a { text-decoration: none; }
+::selection { background: var(--accent); color: var(--spring-wood); }
+
+@keyframes kitFade { from { opacity: 0 } to { opacity: 1 } }
+@keyframes shimmer { 0% { background-position: 200% 0 } 100% { background-position: -200% 0 } }
+
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-thumb { background: var(--ink-700); border-radius: 99px; border: 3px solid var(--cod-gray); }
+
+@media (max-width: 1080px) { .kit-desktop-nav { display: none !important; } }
+
+/* Gallery mosaic — 2x2 anchor tile on wide screens, single column on phones. */
+.gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); grid-auto-rows: 180px; gap: 14px; }
+.gallery-big { grid-column: span 2; grid-row: span 2; }
+@media (max-width: 520px) {
+  .gallery-grid { grid-template-columns: 1fr; grid-auto-rows: 200px; }
+  .gallery-big { grid-column: auto; }
+}
+
+/* ============================================================
+   SEMANTIC TEXT STYLES
+   ============================================================ */
+.display, .h0 {
+  font-family: var(--font-display); font-weight: 700;
+  font-size: clamp(2.6rem, 7vw, var(--step-6)); line-height: 0.92;
+  letter-spacing: -0.01em; text-transform: uppercase; color: var(--fg);
+}
+h1, .h1 {
+  font-family: var(--font-display); font-weight: 700;
+  font-size: clamp(2rem, 5vw, var(--step-5)); line-height: 0.95;
+  letter-spacing: -0.005em; text-transform: uppercase; color: var(--fg);
+}
+h2, .h2 {
+  font-family: var(--font-display); font-weight: 600;
+  font-size: var(--step-3); line-height: 1.02; text-transform: uppercase; color: var(--fg);
+}
+h3, .h3 {
+  font-family: var(--font-text); font-weight: 700;
+  font-size: var(--step-2); line-height: 1.1; text-transform: uppercase;
+  letter-spacing: 0.01em; color: var(--fg);
+}
+.eyebrow {
+  font-family: var(--font-text); font-weight: 600; font-size: var(--step--1);
+  letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent);
+}
+.lead {
+  font-family: var(--font-text); font-weight: 400; font-size: var(--step-1);
+  line-height: 1.4; letter-spacing: 0.02em; text-transform: uppercase; color: var(--fg-muted);
+}
+p, .body {
+  font-family: var(--font-body); font-weight: 400; font-size: var(--step-0);
+  line-height: 1.6; color: var(--fg-muted);
+}
+.label, .nav-item {
+  font-family: var(--font-text); font-weight: 600; font-size: var(--step--1);
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--fg);
+}
+.meta {
+  font-family: var(--font-text); font-weight: 500; font-size: var(--step--1);
+  letter-spacing: 0.06em; text-transform: uppercase; color: var(--fg-faint);
+}
+.screen-text {
+  background: var(--screen-gradient);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}

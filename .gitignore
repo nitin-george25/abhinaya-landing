@@ -1,0 +1,25 @@
+# dependencies
+/node_modules
+
+# next.js
+/.next/
+/out/
+
+# opennext / cloudflare build output
+/.open-next/
+/.wrangler/
+
+# env / secrets
+.env
+.env*.local
+.dev.vars
+
+# typegen
+/cloudflare-env.d.ts
+next-env.d.ts
+
+# os / editor
+.DS_Store
+*.DS_Store
+.vscode/*
+.idea
