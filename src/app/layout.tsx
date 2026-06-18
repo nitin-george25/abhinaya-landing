@@ -1,6 +1,9 @@
 import type { Metadata, Viewport } from "next";
+import Script from "next/script";
 import "./globals.css";
 import JsonLd from "@/components/JsonLd";
+
+const GA_MEASUREMENT_ID = "G-Z5357PEHDG";
 
 const TITLE = "Abhinaya Cinemas — Movie Theatre in Changanacherry, Kottayam | Now Showing";
 const DESCRIPTION =
@@ -70,6 +73,20 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         {children}
         <JsonLd />
+        {/* Google Analytics 4 (gtag.js). Enhanced Measurement auto-tracks
+            outbound link clicks — e.g. clicks on the social media links. */}
+        <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
+          strategy="afterInteractive"
+        />
+        <Script id="ga4-init" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${GA_MEASUREMENT_ID}');
+          `}
+        </Script>
       </body>
     </html>
   );
