@@ -8,7 +8,15 @@ export const CONTACT = {
   phoneDisplay: "+91 481 406 6453",
   phoneHref: "+914814066453",
   addressLines: ["Abhinaya Cinemas, M C Road", "Perunna, Changanacherry", "Kottayam, Kerala — 686101"],
+  // Verified against the Google Business pin (matches layout.tsx geo.position).
+  geo: { lat: 9.4426752, lng: 76.5431387 },
 };
+
+/** Google Maps turn-by-turn directions link to the cinema. */
+export const DIRECTIONS_URL = `https://www.google.com/maps/dir/?api=1&destination=${CONTACT.geo.lat},${CONTACT.geo.lng}`;
+
+/** Keyless interactive Google Maps embed centred on the cinema. */
+export const MAP_EMBED_URL = `https://maps.google.com/maps?q=${CONTACT.geo.lat},${CONTACT.geo.lng}&z=16&output=embed`;
 
 export const SOCIALS: Record<string, string> = {
   instagram: "https://www.instagram.com/abhinayacinemas/",

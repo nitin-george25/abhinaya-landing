@@ -1,7 +1,7 @@
 "use client";
 
 import { LogoLockup, Button, SocialLinks } from "./primitives";
-import { NAV, CONTACT } from "@/lib/site";
+import { NAV, CONTACT, DIRECTIONS_URL, MAP_EMBED_URL } from "@/lib/site";
 
 export default function Footer({ onNav }: { onNav: (item: string) => void }) {
   return (
@@ -38,7 +38,34 @@ export default function Footer({ onNav }: { onNav: (item: string) => void }) {
             </div>
           </div>
         </div>
-        <div style={{ display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: 12, paddingTop: 24 }}>
+
+        {/* Directions map */}
+        <div style={{ paddingTop: 48 }}>
+          <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", flexWrap: "wrap", gap: 12, marginBottom: 16 }}>
+            <div className="eyebrow">Find us</div>
+            <a href={DIRECTIONS_URL} target="_blank" rel="noopener noreferrer"
+              style={{ display: "inline-flex", alignItems: "center", gap: 8, fontFamily: "var(--font-text)", fontWeight: 500, textTransform: "uppercase", letterSpacing: "0.08em", fontSize: 13, color: "var(--accent)", textDecoration: "none" }}>
+              Get directions →
+            </a>
+          </div>
+          <div style={{ position: "relative", width: "100%", aspectRatio: "16 / 5", minHeight: 220, borderRadius: "var(--r-sm)", overflow: "hidden", border: "1px solid var(--border)" }}>
+            <iframe
+              title="Abhinaya Cinemas location on Google Maps"
+              src={MAP_EMBED_URL}
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              allowFullScreen
+              style={{ border: 0, width: "100%", height: "100%", filter: "grayscale(0.3) contrast(1.05)" }}
+            />
+            <div style={{ position: "absolute", right: 16, bottom: 16 }}>
+              <a href={DIRECTIONS_URL} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none" }}>
+                <Button size="sm" variant="primary" icon="arrow-right">Get Directions</Button>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div style={{ display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: 12, paddingTop: 24, marginTop: 48, borderTop: "1px solid var(--border)" }}>
           <span className="meta">© 2026 Abhinaya Cinemas · abhinayacinemas.com</span>
           <span className="meta" style={{ display: "flex", gap: 14 }}>
             <a href="/privacy.html" style={{ color: "inherit", textDecoration: "none" }}
