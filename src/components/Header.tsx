@@ -1,9 +1,17 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { motion, useReducedMotion, EASE } from "./motion";
 import { LogoLockup, Button, SocialLinks } from "./primitives";
 import Icon from "./Icon";
 import { NAV, openBms } from "@/lib/site";
+
+// Drawer links slide in from the right, one after another, once the panel is open.
+const drawerList = { closed: {}, open: { transition: { staggerChildren: 0.06, delayChildren: 0.12 } } };
+const drawerLink = {
+  closed: { opacity: 0, x: 28 },
+  open: { opacity: 1, x: 0, transition: { duration: 0.45, ease: EASE } },
+};
 
 export default function Header({ active, onNav }: { active: string; onNav: (item: string) => void }) {
   const [open, setOpen] = useState(false);
@@ -15,13 +23,19 @@ export default function Header({ active, onNav }: { active: string; onNav: (item
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  const reduce = useReducedMotion();
   return (
-    <header style={{
+    <motion.header
+      data-reveal=""
+      initial={reduce ? false : { y: -18, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.6, ease: EASE }}
+      style={{
       position: "sticky", top: 0, zIndex: 50,
       background: scrolled ? "rgba(21,21,21,0.82)" : "transparent",
       backdropFilter: scrolled ? "blur(14px)" : "none",
       borderBottom: scrolled ? "1px solid var(--border)" : "1px solid transparent",
-      transition: "all .3s var(--ease)",
+      transition: "background .3s var(--ease), backdrop-filter .3s var(--ease), border-color .3s var(--ease)",
     }}>
       <div style={{ maxWidth: 1280, margin: "0 auto", padding: "18px 32px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
         <div style={{ cursor: "pointer" }} onClick={() => onNav("Now Showing")}><LogoLockup size={30} /></div>
@@ -63,23 +77,24 @@ export default function Header({ active, onNav }: { active: string; onNav: (item
             <LogoLockup size={30} />
             <button onClick={() => setOpen(false)} aria-label="Close" style={{ background: "none", border: 0, color: "var(--fg)", cursor: "pointer", display: "inline-flex" }}><Icon name="x" size={28} /></button>
           </div>
-          <nav style={{ display: "flex", flexDirection: "column", gap: 6, marginTop: 48 }}>
+          <motion.nav variants={drawerList} initial="closed" animate={open ? "open" : "closed"}
+            style={{ display: "flex", flexDirection: "column", gap: 6, marginTop: 48 }}>
             {NAV.map((item, i) => (
-              <a key={item} onClick={() => { onNav(item); setOpen(false); }} style={{
+              <motion.a key={item} variants={drawerLink} onClick={() => { onNav(item); setOpen(false); }} style={{
                 fontFamily: "var(--font-display)", fontWeight: 700, textTransform: "uppercase", fontSize: "clamp(36px,9vw,68px)",
                 lineHeight: 1.02, cursor: "pointer", color: active === item ? "var(--accent)" : "var(--fg)",
                 display: "flex", alignItems: "baseline", gap: 14,
               }}>
                 <span style={{ fontFamily: "var(--font-text)", fontWeight: 600, fontSize: 14, color: "var(--fg-faint)", letterSpacing: "0.1em" }}>0{i + 1}</span>
                 {item}
-              </a>
+              </motion.a>
             ))}
-          </nav>
+          </motion.nav>
           <div style={{ marginTop: "auto" }}>
             <SocialLinks size={22} gap={20} />
           </div>
         </div>
       </div>
-    </header>
+    </motion.header>
   );
 }

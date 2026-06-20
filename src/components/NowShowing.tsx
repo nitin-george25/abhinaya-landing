@@ -2,6 +2,7 @@
 
 import type { ReactNode } from "react";
 import { Badge, Pill, ImgSlot, Button, SectionHeader } from "./primitives";
+import { Reveal, StaggerGroup, StaggerItem } from "./motion";
 import { openBms } from "@/lib/site";
 import type { MovieCardData, Programme } from "@/lib/movies";
 
@@ -55,15 +56,24 @@ export default function NowShowing({ movies, tab, setTab }: { movies: Programme;
   const list = movies[tab] || [];
   return (
     <section id="programme" style={{ maxWidth: 1280, margin: "0 auto", padding: "96px 32px" }}>
-      <SectionHeader eyebrow="What's on" title={tab} right={
-        <div style={{ display: "flex", gap: 10 }}>
-          <Pill active={tab === "Now Showing"} onClick={() => setTab("Now Showing")}>Now Showing</Pill>
-          <Pill active={tab === "Coming Soon"} onClick={() => setTab("Coming Soon")}>Coming Soon</Pill>
-        </div>
-      } />
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(min(248px,100%),1fr))", gap: 24 }}>
-        {list.length === 0 ? <EmptyState tab={tab} /> : list.map((m) => <MovieCard key={m.title} m={m} />)}
-      </div>
+      <Reveal>
+        <SectionHeader eyebrow="What's on" title={tab} right={
+          <div style={{ display: "flex", gap: 10 }}>
+            <Pill active={tab === "Now Showing"} onClick={() => setTab("Now Showing")}>Now Showing</Pill>
+            <Pill active={tab === "Coming Soon"} onClick={() => setTab("Coming Soon")}>Coming Soon</Pill>
+          </div>
+        } />
+      </Reveal>
+      {/* key={tab} remounts the group so the cards re-stagger when the user
+          flips between Now Showing and Coming Soon. */}
+      <StaggerGroup key={tab} style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(min(248px,100%),1fr))", gap: 24 }}>
+        {list.length === 0 ? (
+          <StaggerItem style={{ gridColumn: "1 / -1" }}><EmptyState tab={tab} /></StaggerItem>
+        ) : (
+          list.map((m) => <StaggerItem key={m.title}><MovieCard m={m} /></StaggerItem>
+          )
+        )}
+      </StaggerGroup>
     </section>
   );
 }

@@ -2,6 +2,7 @@
 
 import { Button } from "./primitives";
 import Icon from "./Icon";
+import { Reveal, StaggerGroup, StaggerItem } from "./motion";
 import { CONTACT } from "@/lib/site";
 import type { Opening } from "@/lib/movies";
 
@@ -65,20 +66,20 @@ function CareersEmpty() {
 export default function Careers({ openings }: { openings: Opening[] }) {
   return (
     <section id="careers" style={{ maxWidth: 1280, margin: "0 auto", padding: "96px 32px" }}>
-      <div style={{ marginBottom: 36 }}>
+      <Reveal style={{ marginBottom: 36 }}>
         <div className="eyebrow" style={{ marginBottom: 12 }}>Join us</div>
         <h2 style={{ margin: 0, fontFamily: "var(--font-display)", fontWeight: 700, textTransform: "uppercase", fontSize: "clamp(2rem,4vw,3.25rem)", lineHeight: 0.95 }}>Careers at Abhinaya</h2>
         <p style={{ fontFamily: "var(--font-body)", fontSize: 16, lineHeight: 1.7, color: "var(--fg-muted)", marginTop: 18, maxWidth: 620 }}>
           Help shape the next chapter of a cinema with over fifty years of history. We hire for craft,
           warmth and care for the audience experience.
         </p>
-      </div>
+      </Reveal>
       {openings.length === 0 ? (
-        <CareersEmpty />
+        <Reveal><CareersEmpty /></Reveal>
       ) : (
-        <div style={{ display: "grid", gap: 16 }}>
-          {openings.map((r) => <RoleCard key={r.id} role={r} />)}
-        </div>
+        <StaggerGroup style={{ display: "grid", gap: 16 }}>
+          {openings.map((r) => <StaggerItem key={r.id}><RoleCard role={r} /></StaggerItem>)}
+        </StaggerGroup>
       )}
     </section>
   );

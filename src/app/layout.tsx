@@ -70,6 +70,14 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
+      <head>
+        {/* Motion reveals start hidden (opacity:0) and animate in on the client.
+            If JS never runs — a text-only crawler, JS disabled — neutralise the
+            hidden state so every section stays fully visible and indexable. */}
+        <noscript>
+          <style>{`[data-reveal]{opacity:1!important;transform:none!important}`}</style>
+        </noscript>
+      </head>
       <body>
         {children}
         <JsonLd />

@@ -3,6 +3,7 @@
 import { useState, type CSSProperties } from "react";
 import { Button } from "./primitives";
 import Icon from "./Icon";
+import { Reveal } from "./motion";
 import { CONTACT } from "@/lib/site";
 import { browserClient } from "@/lib/supabase";
 
@@ -68,7 +69,7 @@ export default function Contact() {
   return (
     <section id="contact" style={{ background: "var(--ink-950)", borderTop: "1px solid var(--border)" }}>
       <div style={{ maxWidth: 1280, margin: "0 auto", padding: "110px 32px", display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(320px,100%),1fr))", gap: 64 }}>
-        <div>
+        <Reveal>
           <div className="eyebrow" style={{ marginBottom: 14 }}>Get in touch</div>
           <h2 style={{ margin: 0, fontFamily: "var(--font-display)", fontWeight: 700, textTransform: "uppercase", fontSize: "clamp(2rem,4vw,3.25rem)", lineHeight: 0.95 }}>
             Say <span className="screen-text">Hello</span>
@@ -98,8 +99,9 @@ export default function Contact() {
               </a>
             </div>
           </div>
-        </div>
+        </Reveal>
 
+        <Reveal delay={0.1}>
         <form onSubmit={submit} style={{ display: "grid", gap: 18 }}>
           <ContactInput label="Name" name="name" required value={form.name} onChange={set("name")} />
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(180px,100%),1fr))", gap: 18 }}>
@@ -125,6 +127,7 @@ export default function Contact() {
             </Button>
           </div>
         </form>
+        </Reveal>
       </div>
     </section>
   );

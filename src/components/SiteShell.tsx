@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { MotionConfig } from "motion/react";
 import Header from "./Header";
 import Hero from "./Hero";
 import NowShowing from "./NowShowing";
@@ -72,16 +73,21 @@ export default function SiteShell({
   };
 
   return (
-    <div>
-      <Header active={active} onNav={onNav} />
-      <Hero onPlay={() => setTrailer(true)} heroMovie={heroMovie} />
-      <NowShowing movies={movies} tab={tab} setTab={(t) => { setTab(t); setActive(t); }} />
-      <Legacy />
-      <Gallery />
-      <Careers openings={openings} />
-      <Contact />
-      <Footer onNav={onNav} />
-      {trailer && <TrailerModal trailerUrl={heroMovie?.trailerUrl} onClose={() => setTrailer(false)} />}
-    </div>
+    // reducedMotion="user" makes every motion component below honour the OS
+    // "reduce motion" setting — transforms/scale/rotate are dropped, leaving
+    // only gentle opacity fades.
+    <MotionConfig reducedMotion="user">
+      <div>
+        <Header active={active} onNav={onNav} />
+        <Hero onPlay={() => setTrailer(true)} heroMovie={heroMovie} />
+        <NowShowing movies={movies} tab={tab} setTab={(t) => { setTab(t); setActive(t); }} />
+        <Legacy />
+        <Gallery />
+        <Careers openings={openings} />
+        <Contact />
+        <Footer onNav={onNav} />
+        {trailer && <TrailerModal trailerUrl={heroMovie?.trailerUrl} onClose={() => setTrailer(false)} />}
+      </div>
+    </MotionConfig>
   );
 }
