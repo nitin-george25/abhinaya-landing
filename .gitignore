@@ -23,3 +23,6 @@ next-env.d.ts
 *.DS_Store
 .vscode/*
 .idea
+
+# Scratch folder used to retire files (the mount does not permit rm).
+_to_delete/

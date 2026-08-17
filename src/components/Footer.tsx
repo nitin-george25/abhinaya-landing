@@ -69,13 +69,24 @@ export default function Footer({ onNav }: { onNav: (item: string) => void }) {
         <div style={{ display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: 12, paddingTop: 24, marginTop: 48, borderTop: "1px solid var(--border)" }}>
           <span className="meta">© 2026 Abhinaya Cinemas · abhinayacinemas.com</span>
           <span className="meta" style={{ display: "flex", gap: 14 }}>
-            <a href="/privacy.html" style={{ color: "inherit", textDecoration: "none" }}
-              onMouseEnter={(e) => (e.currentTarget.style.color = "var(--accent)")}
-              onMouseLeave={(e) => (e.currentTarget.style.color = "inherit")}>Privacy</a>
-            <span>·</span>
-            <a href="/terms.html" style={{ color: "inherit", textDecoration: "none" }}
-              onMouseEnter={(e) => (e.currentTarget.style.color = "var(--accent)")}
-              onMouseLeave={(e) => (e.currentTarget.style.color = "inherit")}>Terms</a>
+            {/* All six policy pages are linked here on purpose: Razorpay's website
+                check follows links from the site rather than guessing URLs, so a
+                page that exists but is not linked does not count. */}
+            {[
+              ["/pricing.html", "Pricing"],
+              ["/refunds.html", "Refunds"],
+              ["/shipping.html", "Delivery"],
+              ["/contact.html", "Contact"],
+              ["/privacy.html", "Privacy"],
+              ["/terms.html", "Terms"],
+            ].map(([href, label], i) => (
+              <span key={href} style={{ display: "contents" }}>
+                {i > 0 && <span>·</span>}
+                <a href={href} style={{ color: "inherit", textDecoration: "none" }}
+                  onMouseEnter={(e) => (e.currentTarget.style.color = "var(--accent)")}
+                  onMouseLeave={(e) => (e.currentTarget.style.color = "inherit")}>{label}</a>
+              </span>
+            ))}
           </span>
         </div>
       </div>
