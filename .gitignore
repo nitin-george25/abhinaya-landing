@@ -26,3 +26,6 @@ next-env.d.ts
 
 # Scratch folder used to retire files (the mount does not permit rm).
 _to_delete/
+
+# Claude Code machine-local settings (keep .claude/settings.json shared)
+.claude/settings.local.json
